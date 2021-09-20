@@ -19,6 +19,7 @@
 //add your includes for the project PtLINO_Rover here
 
 const unsigned long eventInterval = 1000;
+unsigned long previousTime = 0;
 unsigned long previousTimeTriangulo = 0;
 unsigned long previousTimeX = 0;
 unsigned long previousTimeSelect = 0;
@@ -30,6 +31,10 @@ unsigned long currentTime = millis();
 
 TFT_eSprite Disbuff = TFT_eSprite(&M5.Lcd);
 char *ssid = "LucanusCervus";
+char SSID[32];
+
+// I2C address of the RoverC Hat
+#define ROVERC_I2C_Address 0x38
 
 #define MIN_GARRA 5
 #define MAX_GARRA 75
@@ -39,15 +44,6 @@ bool garraAberta = false;
 //String serial
 String strSerial = "";
 
-void SetChargingCurrent(uint8_t CurrentLevel) {
-	Wire1.beginTransmission(0x34);
-	Wire1.write(0x33);
-	Wire1.write(0xC0 | (CurrentLevel & 0x0f));
-	Wire1.endTransmission();
-}
-
-// I2C address of the RoverC Hat
-#define ROVERC_I2C_Address 0x38
 
 // container for the actual motor speed
 int8_t motor_speeds[4] = { 0, 0, 0, 0 };
@@ -70,4 +66,21 @@ void move_rover(double angle, int speed);
 void garra(int angulo);
 
 bool temAlgumComandoDeMotorPresionado();
+
+
+void showBateriaStatus();
+void SetChargingCurrent(uint8_t CurrentLevel) {
+	Wire1.beginTransmission(0x34);
+	Wire1.write(0x33);
+	Wire1.write(0xC0 | (CurrentLevel & 0x0f));
+	Wire1.endTransmission();
+}
+
+double getBatteryLevel(void) {
+	uint16_t vbatData = M5.Axp.GetVbatData();
+	double vbat = vbatData * 1.1 / 1000;
+	uint16_t vapsData = M5.Axp.GetVapsData();
+	double vaps = vapsData * 1.4 / 1000;
+	return 100.0 * ((vaps - 3.0) / (4.07 - 3.0));
+}
 #endif /* _LucanusCervus_H_ */

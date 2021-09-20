@@ -9,22 +9,38 @@ void setup() {
 
 	uint64_t chipid = ESP.getEfuseMac();
 	String str = ssid + String("_") + String((uint32_t) (chipid >> 32), HEX);
-	char SSID[32];
 
 	str.toCharArray(SSID, str.length() + 1);
 
 	M5.Lcd.setRotation(1);
 	M5.Lcd.setSwapBytes(false);
-	Disbuff.createSprite(240, 135);
-	Disbuff.setSwapBytes(true);
-	Disbuff.fillRect(0, 0, 240, 20, Disbuff.color565(50, 50, 50));
-	Disbuff.setTextSize(2);
-	Disbuff.setTextColor(WHITE);
-	Disbuff.setCursor(15, 35);
-	Disbuff.print(str);
-	Disbuff.pushSprite(0, 0);
 
 	SetChargingCurrent(4);
+
+	Disbuff.createSprite(240, 135);
+	Disbuff.setSwapBytes(true);
+	Disbuff.fillRect(0, 0, 240, 25, Disbuff.color565(50, 50, 50));
+
+	Disbuff.setTextSize(2);
+	Disbuff.setTextColor(Disbuff.color565(81, 157, 214));
+	Disbuff.setCursor(15, 3);
+	Disbuff.print("Patrulha");
+	Disbuff.setTextColor(Disbuff.color565(255, 214, 0));
+	Disbuff.print("EU");
+	Disbuff.setTextColor(Disbuff.color565(214, 36, 8));
+	Disbuff.print("RE");
+	Disbuff.setTextColor(Disbuff.color565(78, 190, 69));
+	Disbuff.print("KA");
+	Disbuff.setTextColor(Disbuff.color565(0, 0, 0));
+	Disbuff.print(".org");
+
+	Disbuff.setTextColor(WHITE);
+	Disbuff.setCursor(15, 35);
+	Disbuff.print(SSID);
+	Disbuff.pushSprite(0, 0);
+	Disbuff.deleteSprite();
+
+	showBateriaStatus();
 
 #ifdef SETSERIAL
 	// put your setup code here, to run once:
@@ -44,6 +60,11 @@ void loop() {
 	//from smartphone.Hence calling this function is
 	//mandatory in order to get data properly from your mobile.
 	Dabble.processInput();
+
+	if (currentTime - previousTime >= 1000) {
+		showBateriaStatus();
+		previousTime = currentTime;
+	}
 
 	if (GamePad.isStartPressed()) {
 		strSerial = "Start";
@@ -114,6 +135,22 @@ void loop() {
 		previousTimeSerial = currentTime;
 	}
 #endif
+}
+
+
+
+void showBateriaStatus() {
+
+	Disbuff.createSprite(240, 35);
+	Disbuff.setSwapBytes(true);
+	Disbuff.setTextSize(2);
+	Disbuff.setTextColor(WHITE);
+	Disbuff.setCursor(0, 0);
+	Disbuff.printf("Bat: %.2fV, %.0f%%", M5.Axp.GetBatVoltage(),getBatteryLevel());
+
+	Disbuff.pushSprite(15, 70);
+
+	Disbuff.deleteSprite();
 }
 
 void go(int angle, int speed) {
