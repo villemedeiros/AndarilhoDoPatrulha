@@ -11,7 +11,7 @@
 // Do not remove the include below
 #define CUSTOM_SETTINGS
 #define INCLUDE_GAMEPAD_MODULE
-#define SETSERIAL
+//#define SETSERIAL
 #include <DabbleESP32.h>
 #include <M5StickCPlus.h>
 #include <Wire.h>

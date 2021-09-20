@@ -1,5 +1,5 @@
 Config.Release.board.BOARD.ID=m5stick-c-plus
-Config.Release.board.BOARD.MENU.DebugLevel=verbose
+Config.Release.board.BOARD.MENU.DebugLevel=none
 Config.Release.board.BOARD.MENU.PartitionScheme=default
 Config.Release.board.BOARD.MENU.UploadSpeed=115200
 Config.Release.board.BOARD.TXT=${SLOEBER_HOME}/arduinoPlugin/packages/m5stack/hardware/esp32/1.0.9/boards.txt
