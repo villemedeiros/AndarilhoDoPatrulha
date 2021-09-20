@@ -8,10 +8,10 @@ void setup() {
 	Wire.begin(0, 26, 10000);
 
 	uint64_t chipid = ESP.getEfuseMac();
-	String str = ssid + String((uint32_t) (chipid >> 32), HEX);
+	String str = ssid + String("_") + String((uint32_t) (chipid >> 32), HEX);
 	char SSID[32];
 
-	str.toCharArray(SSID, str.length()+1);
+	str.toCharArray(SSID, str.length() + 1);
 
 	M5.Lcd.setRotation(1);
 	M5.Lcd.setSwapBytes(false);

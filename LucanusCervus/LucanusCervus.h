@@ -29,7 +29,7 @@ unsigned long previousTimeCircle = 0;
 unsigned long currentTime = millis();
 
 TFT_eSprite Disbuff = TFT_eSprite(&M5.Lcd);
-char *ssid = "LucanusCervus_1";
+char *ssid = "LucanusCervus";
 
 #define MIN_GARRA 5
 #define MAX_GARRA 75
