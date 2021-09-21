@@ -7,6 +7,8 @@ void setup() {
 	M5.update();
 	Wire.begin(0, 26, 10000);
 
+	pinMode(LEDPIN, OUTPUT);
+
 	uint64_t chipid = ESP.getEfuseMac();
 	String str = ssid + String("_") + String((uint32_t) (chipid >> 32), HEX);
 
@@ -42,6 +44,8 @@ void setup() {
 
 	showBateriaStatus();
 
+	digitalWrite(LEDPIN, HIGH);
+
 #ifdef SETSERIAL
 	// put your setup code here, to run once:
 	Serial.begin(115200); // make sure your Serial Monitor is also set at this baud rate.
@@ -61,13 +65,22 @@ void loop() {
 	//mandatory in order to get data properly from your mobile.
 	Dabble.processInput();
 
-	if (currentTime - previousTime >= 1000) {
+
+	if (currentTime - previousTimeBateria >= 5000) {
+//		strSerial = "Bateria...";
 		showBateriaStatus();
-		previousTime = currentTime;
+		previousTimeBateria = currentTime;
 	}
 
 	if (GamePad.isStartPressed()) {
-		strSerial = "Start";
+		if (currentTime - previousTimeStart >= 300) {
+			strSerial = "Start";
+			M5.Beep.beep();
+			delay(20);
+			M5.Beep.end();
+			digitalWrite(LEDPIN, !digitalRead(LEDPIN));
+			previousTimeStart = currentTime;
+		}
 	}
 
 	//INICIO CONTROLE DA GARRA
@@ -118,10 +131,12 @@ void loop() {
 	}
 
 	if (GamePad.isSquarePressed()) {
+		strSerial = "Square";
 		move_rover(270, 50);
 	}
 
 	if (GamePad.isCirclePressed()) {
+		strSerial = "Circle";
 		move_rover(90, 50);
 	}
 	//FIM CONTROLE DOS MOTORES
@@ -137,8 +152,6 @@ void loop() {
 #endif
 }
 
-
-
 void showBateriaStatus() {
 
 	Disbuff.createSprite(240, 35);
@@ -146,7 +159,8 @@ void showBateriaStatus() {
 	Disbuff.setTextSize(2);
 	Disbuff.setTextColor(WHITE);
 	Disbuff.setCursor(0, 0);
-	Disbuff.printf("Bat: %.2fV, %.0f%%", M5.Axp.GetBatVoltage(),getBatteryLevel());
+	Disbuff.printf("Bat: %.2fV, %.0f%%", M5.Axp.GetBatVoltage(),
+			getBatteryLevel());
 
 	Disbuff.pushSprite(15, 70);
 

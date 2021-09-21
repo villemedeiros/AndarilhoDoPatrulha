@@ -19,8 +19,9 @@
 //add your includes for the project PtLINO_Rover here
 
 const unsigned long eventInterval = 1000;
-unsigned long previousTime = 0;
+unsigned long previousTimeBateria = 0;
 unsigned long previousTimeTriangulo = 0;
+unsigned long previousTimeStart = 0;
 unsigned long previousTimeX = 0;
 unsigned long previousTimeSelect = 0;
 unsigned long previousTimeSerial = 0;
@@ -62,6 +63,8 @@ void rover_stop();
 void move_rover(double angle, int speed);
 
 //add your function definitions for the project PtLINO_Rover here
+
+#define LEDPIN 10
 
 void garra(int angulo);
 
