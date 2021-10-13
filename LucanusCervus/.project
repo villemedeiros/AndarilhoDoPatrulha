@@ -49,7 +49,7 @@
 		<link>
 			<name>libraries/DabbleESP32</name>
 			<type>2</type>
-			<location>C:/Users/ville/Documents/Arduino/libraries/DabbleESP32</location>
+			<locationURI>ECLIPSE_HOME/arduinoPlugin/libraries/DabbleESP32/1.5.1</locationURI>
 		</link>
 		<link>
 			<name>libraries/FS</name>

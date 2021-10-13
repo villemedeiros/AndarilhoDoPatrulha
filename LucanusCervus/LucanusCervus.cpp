@@ -53,6 +53,10 @@ void setup() {
 
 	Dabble.begin(SSID);
 
+
+	//Dabble.waitForAppConnection();
+	//delay(1000);
+
 }
 
 // The loop function is called in an endless loop
@@ -65,82 +69,90 @@ void loop() {
 	//mandatory in order to get data properly from your mobile.
 	Dabble.processInput();
 
+	if (!Dabble.isAppConnected()) {
+		digitalWrite(LEDPIN, HIGH);
+		delay(100);
+		digitalWrite(LEDPIN, LOW);
+		delay(100);
 
-	if (currentTime - previousTimeBateria >= 5000) {
+	} else {
+
+		if (currentTime - previousTimeBateria >= 5000) {
 //		strSerial = "Bateria...";
-		showBateriaStatus();
-		previousTimeBateria = currentTime;
-	}
-
-	if (GamePad.isStartPressed()) {
-		if (currentTime - previousTimeStart >= 300) {
-			strSerial = "Start";
-			M5.Beep.beep();
-			delay(20);
-			M5.Beep.end();
-			digitalWrite(LEDPIN, !digitalRead(LEDPIN));
-			previousTimeStart = currentTime;
-		}
-	}
-
-	//INICIO CONTROLE DA GARRA
-	if (GamePad.isTrianglePressed())
-		if (currentTime - previousTimeTriangulo >= 20) {
-			strSerial = "Triangle";
-			garra(garraAngulo += 1);
-			garraAberta = false;
-			previousTimeTriangulo = currentTime;
+			showBateriaStatus();
+			previousTimeBateria = currentTime;
 		}
 
-	if (GamePad.isCrossPressed())
-		if (currentTime - previousTimeX >= 20) {
-			strSerial = "Cross";
-			garra(garraAngulo -= 1);
-			garraAberta = true;
-			previousTimeX = currentTime;
-
-		}
-
-	if (GamePad.isSelectPressed())
-		if (currentTime - previousTimeSelect >= 300) {
-			strSerial = "Select";
-
-			if (garraAberta) {
-				garra(MAX_GARRA);
-			} else {
-				garra(MIN_GARRA);
+		if (GamePad.isStartPressed()) {
+			if (currentTime - previousTimeStart >= 300) {
+				strSerial = "Start";
+				M5.Beep.beep();
+				delay(20);
+				M5.Beep.end();
+				digitalWrite(LEDPIN, !digitalRead(LEDPIN));
+				previousTimeStart = currentTime;
 			}
-			garraAberta = !garraAberta;
-
-			/* Update the timing for the next time around */
-			previousTimeSelect = currentTime;
-
 		}
-	//FIM CONTROLE DA GARRA
 
-	//INICIO CONTROLE DOS MOTORES
-	if (GamePad.getRadius() > 0) {
-		//Gira a referencia dos angulos
-		//para 0 frente 90 esquerda
-		// 180 para traz e 270 direita
-		int a = GamePad.getAngle();
-		a = (a < 0 && a >= -90) ? 360 + a : a;
-		go(a, GamePad.getRadius());
-	} else if (!temAlgumComandoDeMotorPresionado()) {
-		rover_stop();
+		//INICIO CONTROLE DA GARRA
+		if (GamePad.isTrianglePressed())
+			if (currentTime - previousTimeTriangulo >= 20) {
+				strSerial = "Triangle";
+				garra(garraAngulo += 1);
+				garraAberta = false;
+				previousTimeTriangulo = currentTime;
+			}
+
+		if (GamePad.isCrossPressed())
+			if (currentTime - previousTimeX >= 20) {
+				strSerial = "Cross";
+				garra(garraAngulo -= 1);
+				garraAberta = true;
+				previousTimeX = currentTime;
+
+			}
+
+		if (GamePad.isSelectPressed())
+			if (currentTime - previousTimeSelect >= 300) {
+				strSerial = "Select";
+
+				if (garraAberta) {
+					garra(MAX_GARRA);
+				} else {
+					garra(MIN_GARRA);
+				}
+				garraAberta = !garraAberta;
+
+				/* Update the timing for the next time around */
+				previousTimeSelect = currentTime;
+
+			}
+		//FIM CONTROLE DA GARRA
+
+		//INICIO CONTROLE DOS MOTORES
+		if (GamePad.getRadius() > 0) {
+			//Gira a referencia dos angulos
+			//para 0 frente 90 esquerda
+			// 180 para traz e 270 direita
+			int a = GamePad.getAngle();
+			a = (a < 0 && a >= -90) ? 360 + a : a;
+			go(a, GamePad.getRadius());
+		} else if (!temAlgumComandoDeMotorPresionado()) {
+			rover_stop();
+		}
+
+		if (GamePad.isSquarePressed()) {
+			strSerial = "Square";
+			move_rover(270, 50);
+		}
+
+		if (GamePad.isCirclePressed()) {
+			strSerial = "Circle";
+			move_rover(90, 50);
+		}
+		//FIM CONTROLE DOS MOTORES
+
 	}
-
-	if (GamePad.isSquarePressed()) {
-		strSerial = "Square";
-		move_rover(270, 50);
-	}
-
-	if (GamePad.isCirclePressed()) {
-		strSerial = "Circle";
-		move_rover(90, 50);
-	}
-	//FIM CONTROLE DOS MOTORES
-
 #ifdef SETSERIAL
 	if (currentTime - previousTimeSerial >= 500) {
 		Serial.print(currentTime);
