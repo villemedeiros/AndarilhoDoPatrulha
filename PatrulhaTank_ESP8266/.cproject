@@ -19,46 +19,40 @@
 							<builder buildPath="${workspace_loc:/PatrulhaTank_ESP8266}/Release" id="io.sloeber.sketch.builder.1937958715" keepEnvironmentInBuildfile="false" name="Arduino sketch builder" parallelBuildOn="false" superClass="io.sloeber.sketch.builder"/>
 							<tool id="io.sloeber.tool.sketch.compiler.cpp.985063688" name="Arduino C++ Compiler" superClass="io.sloeber.tool.sketch.compiler.cpp">
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="io.sloeber.compiler.cpp.sketch.option.incpath.1173992055" name="Include Paths (-I)" superClass="io.sloeber.compiler.cpp.sketch.option.incpath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsyncTCP-master/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsync_WiFiManager/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESP8266WiFi/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsyncWebServer-master/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/DNSServer/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/core/core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/core/variant}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/Hash/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsyncTCP/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsyncWebServer/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsync_WiFiManager/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESP8266WiFi/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESP8266WebServer/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/SPI}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/DNSServer/src}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.cpp.sketch.input.201119123" name="CPP source files" superClass="io.sloeber.compiler.cpp.sketch.input"/>
 							</tool>
 							<tool id="io.sloeber.tool.compiler.c.830834130" name="Arduino C Compiler" superClass="io.sloeber.tool.compiler.c">
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="io.sloeber.compiler.c.sketch.option.incpath.1281661908" name="Include Paths (-I)" superClass="io.sloeber.compiler.c.sketch.option.incpath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsyncTCP-master/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsync_WiFiManager/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESP8266WiFi/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsyncWebServer-master/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/DNSServer/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/core/core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/core/variant}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/Hash/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsyncTCP/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsyncWebServer/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsync_WiFiManager/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESP8266WiFi/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESP8266WebServer/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/SPI}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/DNSServer/src}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.c.sketch.input.1229301772" name="C Source Files" superClass="io.sloeber.compiler.c.sketch.input"/>
 							</tool>
 							<tool id="io.sloeber.tool.sketch.compiler.s.1743390704" name="Arduino Assembler" superClass="io.sloeber.tool.sketch.compiler.s">
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="io.sloeber.compiler.asm.sketch.option.incpath.663067913" name="Include Paths (-I)" superClass="io.sloeber.compiler.asm.sketch.option.incpath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsyncTCP-master/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsync_WiFiManager/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESP8266WiFi/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsyncWebServer-master/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/DNSServer/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/core/core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/core/variant}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/Hash/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsyncTCP/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsyncWebServer/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESPAsync_WiFiManager/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESP8266WiFi/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/ESP8266WebServer/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/SPI}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PatrulhaTank_ESP8266/libraries/DNSServer/src}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.S.sketch.input.236656580" name="Assembly source files" superClass="io.sloeber.compiler.S.sketch.input"/>
 							</tool>

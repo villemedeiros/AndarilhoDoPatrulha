@@ -151,8 +151,6 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
 	}
 }
 
-
-
 void setup() {
 // Serial port for debugging purposes
 	Serial.begin(115200);
@@ -188,17 +186,19 @@ void setup() {
 	while (!Serial)
 		;
 	delay(200);
-	Serial.print(
-			"\nStarting Async_AutoConnect_ESP8266_minimal on "
-					+ String(ARDUINO_BOARD));
-	Serial.println(ESP_ASYNC_WIFIMANAGER_VERSION);
+	Serial.println("\nBuscando Rede Wifi para o PatrulhaTANK");
+//	Serial.println(ESP_ASYNC_WIFIMANAGER_VERSION);
+
 	ESPAsync_WiFiManager ESPAsync_wifiManager(&webServer, &dnsServer,
 			"PatrulhaTANK");
 //	ESPAsync_wifiManager.resetSettings();   //reset saved settings
 	//ESPAsync_wifiManager.setAPStaticIPConfig(IPAddress(192,168,186,1), IPAddress(192,168,186,1), IPAddress(255,255,255,0));
 	ESPAsync_wifiManager.autoConnect("PatrulhaTANK");
 	if (WiFi.status() == WL_CONNECTED) {
-		Serial.print(  "SSID.....: ");
+
+		Serial.print(patrulhalogo());
+
+		Serial.print("\nSSID.....: ");
 		Serial.println(WiFi.SSID());
 		Serial.print(F("Local IP.: "));
 		Serial.println(WiFi.localIP());
