@@ -151,6 +151,7 @@ void setup() {
 //	Serial.println(ssid);
 //	Serial.print("Servidor on.: ");
 //	Serial.println(WiFi.localIP());
+	//---------------------------------------------------
 
 //	CONECTANDO EM UMA CONFIGURAÇÃO WEBMANAGER
 //	Serial.println("\nBuscando Rede Wifi para o PatrulhaTANK");
@@ -172,6 +173,7 @@ void setup() {
 //	} else {
 //		Serial.println(ESPAsync_wifiManager.getStatus(WiFi.status()));
 //	}
+	//----------------------------------------------
 
 	//CONECTANDO EM UMA AP
 	uint32_t chipid = ESP.getChipId();
@@ -191,12 +193,13 @@ void setup() {
 	IPAddress myIP = WiFi.softAPIP();
 	Serial.print("AP IP...: ");
 	Serial.println(myIP);
+	//------------------------------------------------------------
 
 	initWebSocket();
 
 // Route for root / web page
 	server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
-		request->send(200, "text/html");
+		request->send(200, "text/html","Vivo!");
 	});
 
 // Start server
