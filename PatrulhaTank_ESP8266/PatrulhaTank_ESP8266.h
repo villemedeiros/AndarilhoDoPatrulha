@@ -7,6 +7,7 @@
 #ifndef _PatrulhaTank_ESP8266_H_
 #define _PatrulhaTank_ESP8266_H_
 #include "Arduino.h"
+#include <ESP.h>
 //add your includes for the project PatrulhaTank_ESP8266 here
 
 
@@ -14,17 +15,17 @@
   #error This code is intended to run on ESP8266 platform! Please check your Tools->Board setting.
 #endif
 #include <ESP8266WiFi.h>
-#include <ESPAsync_WiFiManager.h>              //https://github.com/khoih-prog/ESPAsync_WiFiManager
+//#include <ESPAsync_WiFiManager.h>              //https://github.com/khoih-prog/ESPAsync_WiFiManager
 #include <ESPAsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <String.h>
 
-AsyncWebServer webServer(80);
-DNSServer dnsServer;
+//AsyncWebServer webServer(80);
+//DNSServer dnsServer;
 //add your function definitions for the project PatrulhaTank_ESP8266_testes here
 
 String patrulhalogo(void) {
-	String patrulhaLogo = "         /\\ \n";
+	String patrulhaLogo = "\n         /\\ \n";
 	patrulhaLogo += "        /  \\ \n";
 	patrulhaLogo += "       /____\\ \n";
 	patrulhaLogo += "      /......\\ \n";

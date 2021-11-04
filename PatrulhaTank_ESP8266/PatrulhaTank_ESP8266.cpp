@@ -9,6 +9,9 @@
 //const char *ssid = "Patrulha Patrulheiros";
 //const char *password = "eureka#nos";
 
+const char *ssid = "PatrulhaTANK";
+const char *password = "33333333";
+
 bool ledState = 0;
 const int ledPin = 2;
 
@@ -38,9 +41,6 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
 		data[len] = 0;
 
 		String protocolo = (char*) data;
-		Serial.println();
-		Serial.print("Protocolo.: ");
-		Serial.println(protocolo);
 
 		switch (protocolo[0]) {
 
@@ -59,12 +59,13 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
 			unsigned int angulo = strAngulo.toInt();
 			unsigned int forca = strForca.toInt();
 
-			Serial.print("Angulo.: ");
+			Serial.print("Angulo/Força.: ");
 			Serial.print(angulo);
-			Serial.println("º");
+			Serial.print("º");
 
-			Serial.print("Força..: ");
-			Serial.println(forca);
+			Serial.print("/");
+			Serial.print(map(forca, 0, 255, 0, 100));
+			Serial.println("%");
 
 			analogWrite(D5, forca);
 			analogWrite(D7, forca);
@@ -74,21 +75,9 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
 			double vx = sin((angulo * PI) / 180.0) * speed;
 			double vy = cos((angulo * PI) / 180.0) * speed;
 
-			Serial.println();
-			Serial.print(vx);
-			Serial.print("/");
-			Serial.println(vy);
-
 			if (angulo >= 0 && angulo <= 90) {
 				analogWrite(D5, speed - round(vy));
 				analogWrite(D7, speed);
-
-				Serial.println();
-				Serial.print("M1/M2.: (");
-				Serial.print(speed - round(vy));
-				Serial.print("/");
-				Serial.print(speed);
-				Serial.println(")");
 
 				digitalWrite(D0, LOW);
 				digitalWrite(D1, HIGH);
@@ -99,12 +88,6 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
 
 				analogWrite(D5, speed);
 				analogWrite(D7, speed + round(vy));
-				Serial.println();
-				Serial.print("M1/M2.: (");
-				Serial.print(speed);
-				Serial.print("/");
-				Serial.print(speed + round(vy));
-				Serial.println(")");
 
 				digitalWrite(D0, LOW);
 				digitalWrite(D1, HIGH);
@@ -112,13 +95,6 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
 				digitalWrite(D3, HIGH);
 
 			} else if (angulo > 180 && angulo <= 270) {
-
-				Serial.println();
-				Serial.print("M1/M2.: (");
-				Serial.print(speed + round(vy));
-				Serial.print("/");
-				Serial.print(speed);
-				Serial.println(")");
 
 				analogWrite(D5, speed);
 				analogWrite(D7, speed + round(vy));
@@ -129,13 +105,6 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
 				digitalWrite(D3, LOW);
 
 			} else if (angulo > 270 && angulo < 360) {
-
-				Serial.println();
-				Serial.print("M1/M2.: (");
-				Serial.print(speed);
-				Serial.print("/");
-				Serial.print(speed - round(vy));
-				Serial.println(")");
 
 				analogWrite(D5, speed - round(vy));
 				analogWrite(D7, speed);
@@ -169,7 +138,7 @@ void setup() {
 
 	digitalWrite(D6, HIGH);    //stan
 
-// Connect to Wi-Fi
+//  CONECTANDO EM UMA REDE FIXA
 //	WiFi.begin(ssid, password);
 //	while (WiFi.status() != WL_CONNECTED) {
 //		delay(1000);
@@ -183,28 +152,45 @@ void setup() {
 //	Serial.print("Servidor on.: ");
 //	Serial.println(WiFi.localIP());
 
-	while (!Serial)
-		;
-	delay(200);
-	Serial.println("\nBuscando Rede Wifi para o PatrulhaTANK");
-//	Serial.println(ESP_ASYNC_WIFIMANAGER_VERSION);
+//	CONECTANDO EM UMA CONFIGURAÇÃO WEBMANAGER
+//	Serial.println("\nBuscando Rede Wifi para o PatrulhaTANK");
+////	Serial.println(ESP_ASYNC_WIFIMANAGER_VERSION);
+//
+//	ESPAsync_WiFiManager ESPAsync_wifiManager(&webServer, &dnsServer,
+//			"PatrulhaTANK");
+////	ESPAsync_wifiManager.resetSettings();   //reset saved settings
+//	//ESPAsync_wifiManager.setAPStaticIPConfig(IPAddress(192,168,186,1), IPAddress(192,168,186,1), IPAddress(255,255,255,0));
+//	ESPAsync_wifiManager.autoConnect("PatrulhaTANK");
+//	if (WiFi.status() == WL_CONNECTED) {
+//
+//		Serial.print(patrulhalogo());
+//
+//		Serial.print("\nSSID.....: ");
+//		Serial.println(WiFi.SSID());
+//		Serial.print(F("Local IP.: "));
+//		Serial.println(WiFi.localIP());
+//	} else {
+//		Serial.println(ESPAsync_wifiManager.getStatus(WiFi.status()));
+//	}
 
-	ESPAsync_WiFiManager ESPAsync_wifiManager(&webServer, &dnsServer,
-			"PatrulhaTANK");
-//	ESPAsync_wifiManager.resetSettings();   //reset saved settings
-	//ESPAsync_wifiManager.setAPStaticIPConfig(IPAddress(192,168,186,1), IPAddress(192,168,186,1), IPAddress(255,255,255,0));
-	ESPAsync_wifiManager.autoConnect("PatrulhaTANK");
-	if (WiFi.status() == WL_CONNECTED) {
+	//CONECTANDO EM UMA AP
+	uint32_t chipid = ESP.getChipId();
 
-		Serial.print(patrulhalogo());
+	//ESP.getEfuseMac();
+	String str = ssid + String("_") + String((uint32_t) (chipid), HEX);
+	Serial.println();
+	Serial.print(patrulhalogo());
+	Serial.print("\nAP NET..: ");
+	Serial.println(str);
 
-		Serial.print("\nSSID.....: ");
-		Serial.println(WiFi.SSID());
-		Serial.print(F("Local IP.: "));
-		Serial.println(WiFi.localIP());
-	} else {
-		Serial.println(ESPAsync_wifiManager.getStatus(WiFi.status()));
-	}
+	//Set device in STA mode to begin with
+	WiFi.softAPConfig(IPAddress(192, 168, 4, 1), IPAddress(192, 168, 4, 1),
+			IPAddress(255, 255, 255, 0));
+
+	WiFi.softAP(str.c_str(), password);
+	IPAddress myIP = WiFi.softAPIP();
+	Serial.print("AP IP...: ");
+	Serial.println(myIP);
 
 	initWebSocket();
 
