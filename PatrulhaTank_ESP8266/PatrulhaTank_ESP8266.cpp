@@ -2,8 +2,12 @@
 #include "PatrulhaTank_ESP8266.h"
 
 // Replace with your network credentials
-const char *ssid = "VILLESES";
-const char *password = "2405197900";
+//const char *ssid = "PATRULHAEUREKA.ORG";
+//const char *password = "eureka#harbatolx";
+
+// Replace with your network credentials
+//const char *ssid = "Patrulha Patrulheiros";
+//const char *password = "eureka#nos";
 
 bool ledState = 0;
 const int ledPin = 2;
@@ -147,29 +151,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
 	}
 }
 
-void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client,
-		AwsEventType type, void *arg, uint8_t *data, size_t len) {
-	switch (type) {
-	case WS_EVT_CONNECT:
-		Serial.printf("Cliente Conectado #%u IP %s\n", client->id(),
-				client->remoteIP().toString().c_str());
-		break;
-	case WS_EVT_DISCONNECT:
-		Serial.printf("Client #%u Disconnected\n", client->id());
-		break;
-	case WS_EVT_DATA:
-		handleWebSocketMessage(arg, data, len);
-		break;
-	case WS_EVT_PONG:
-	case WS_EVT_ERROR:
-		break;
-	}
-}
 
-void initWebSocket() {
-	ws.onEvent(onEvent);
-	server.addHandler(&ws);
-}
 
 void setup() {
 // Serial port for debugging purposes
@@ -190,17 +172,39 @@ void setup() {
 	digitalWrite(D6, HIGH);    //stan
 
 // Connect to Wi-Fi
-	WiFi.begin(ssid, password);
-	while (WiFi.status() != WL_CONNECTED) {
-		delay(1000);
-		Serial.println("Connecting to WiFi..");
+//	WiFi.begin(ssid, password);
+//	while (WiFi.status() != WL_CONNECTED) {
+//		delay(1000);
+//		Serial.println("Connecting to WiFi..");
+//	}
+//
+//	Serial.println(patrulhalogo());
+//
+//// Print ESP Local IP Address
+//	Serial.println(ssid);
+//	Serial.print("Servidor on.: ");
+//	Serial.println(WiFi.localIP());
+
+	while (!Serial)
+		;
+	delay(200);
+	Serial.print(
+			"\nStarting Async_AutoConnect_ESP8266_minimal on "
+					+ String(ARDUINO_BOARD));
+	Serial.println(ESP_ASYNC_WIFIMANAGER_VERSION);
+	ESPAsync_WiFiManager ESPAsync_wifiManager(&webServer, &dnsServer,
+			"PatrulhaTANK");
+//	ESPAsync_wifiManager.resetSettings();   //reset saved settings
+	//ESPAsync_wifiManager.setAPStaticIPConfig(IPAddress(192,168,186,1), IPAddress(192,168,186,1), IPAddress(255,255,255,0));
+	ESPAsync_wifiManager.autoConnect("PatrulhaTANK");
+	if (WiFi.status() == WL_CONNECTED) {
+		Serial.print(  "SSID.....: ");
+		Serial.println(WiFi.SSID());
+		Serial.print(F("Local IP.: "));
+		Serial.println(WiFi.localIP());
+	} else {
+		Serial.println(ESPAsync_wifiManager.getStatus(WiFi.status()));
 	}
-
-	Serial.println(patrulhalogo());
-
-// Print ESP Local IP Address
-	Serial.print("Servidor on.: ");
-	Serial.println(WiFi.localIP());
 
 	initWebSocket();
 
@@ -216,4 +220,29 @@ void setup() {
 void loop() {
 	ws.cleanupClients();
 	digitalWrite(ledPin, ledState);
+}
+
+void initWebSocket() {
+	ws.onEvent(onEvent);
+	server.addHandler(&ws);
+}
+
+void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client,
+		AwsEventType type, void *arg, uint8_t *data, size_t len) {
+	switch (type) {
+	case WS_EVT_CONNECT:
+		Serial.printf("Cliente Conectado #%u IP %s\n", client->id(),
+				client->remoteIP().toString().c_str());
+		break;
+	case WS_EVT_DISCONNECT:
+		Serial.printf("Cliente #%u Desconectado\n", client->id());
+		ws.closeAll(0, "desconectado");
+		break;
+	case WS_EVT_DATA:
+		handleWebSocketMessage(arg, data, len);
+		break;
+	case WS_EVT_PONG:
+	case WS_EVT_ERROR:
+		break;
+	}
 }
